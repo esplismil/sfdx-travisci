@@ -44,7 +44,14 @@ node {
                 }
             }
 
+            stage('Run Tests In Test Scratch Org') {
+                rc = command "${toolbelt}/sfdx force:apex:test:run  --wait 10 --resultformat tap --codecoverage --testlevel ${TEST_LEVEL}"
+                if (rc != 0) {
+                    error 'Salesforce unit test run in test scratch org failed.'
+                }
+            }
 
+/*
             // -------------------------------------------------------------------------
             // Create new scratch org to test your code.
             // -------------------------------------------------------------------------
@@ -190,6 +197,7 @@ node {
                     error 'Salesforce package install scratch org deletion failed.'
                 }
             }
+            */
         }
     }
 }
