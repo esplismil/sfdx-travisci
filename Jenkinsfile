@@ -42,9 +42,16 @@ node {
                 if (rc != 0) {
                     error 'Salesforce dev hub org authorization failed.'
                 }
+                
+            }
+            stage('Authorize DevHub 2') {
+                rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl https://test.salesforce.com --clientid ${SF_CONSUMER_KEY} --username ${SF_USERNAME} --jwtkeyfile \"${server_key_file}\" --setdefaultdevhubusername --setalias OrgDevDep"
+                if (rc != 0) {
+                    error 'Salesforce dev hub org authorization failed.'
+                }
+                
             }
             /*
-
             stage('Run Tests In Test Scratch Org') {
                 rc = command "${toolbelt}/sfdx force:apex:test:run  --wait 10 --resultformat tap --codecoverage --testlevel ${TEST_LEVEL}"
                 if (rc != 0) {
