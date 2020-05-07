@@ -38,11 +38,12 @@ node {
             // -------------------------------------------------------------------------
 
             stage('Authorize DevHub') {
-                rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --username ${SF_USERNAME} --jwtkeyfile \"${server_key_file}\" --setdefaultdevhubusername --setalias \"Hub Org\""
+                rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --username ${SF_USERNAME} --jwtkeyfile \"${server_key_file}\" --setdefaultdevhubusername --setalias my-hub-org"
                 if (rc != 0) {
                     error 'Salesforce dev hub org authorization failed.'
                 }
             }
+            /*
 
             stage('Run Tests In Test Scratch Org') {
                 rc = command "${toolbelt}/sfdx force:apex:test:run  --wait 10 --resultformat tap --codecoverage --testlevel ${TEST_LEVEL}"
@@ -51,7 +52,6 @@ node {
                 }
             }
 
-/*
             // -------------------------------------------------------------------------
             // Create new scratch org to test your code.
             // -------------------------------------------------------------------------
